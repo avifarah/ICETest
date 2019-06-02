@@ -25,8 +25,12 @@ namespace CusipPriceProcessor
 		{
 			if (_feedStream.EndOfStream) throw new FeedException("Feed file seems to be empty", 1, string.Empty);
 
-			// An exception will be caught by one of the calling routines
-			var line = Task.Run(_feedStream.ReadLineAsync).Result;
+			// Reading asyncronously of a single line may be an overkill, it will be useful if the file is in a remote location
+			// In which case we will need to provide a timeout mechanism.  Since decorating the method as async and returning a Task<string>
+			// I decided that this is a half baked solution and as such we will read the file synchronously as opposed to the decoration and
+			// The read as follows:
+			//		var line = await _feedStream.ReadLineAsync().ConfigureAwait(false);
+			var line = _feedStream.ReadLine();
 			++_currentLineCount;
 			var cusip = line.GetCusip();
 			if (cusip == null) throw new FeedException("First line of Feed is not a cusip", _currentLineCount, line);
@@ -110,21 +114,18 @@ namespace CusipPriceProcessor
 		/// </summary>
 		public event EventHandler<CusipPriceEventArgs> CusipPriceHandler = delegate { };
 
-		public Task<bool> ProcessFeedFile()
+		public async Task<bool> ProcessFeedFile()
 		{
-			var tsk = Task.Run(() => ProcessFeedFileImp());
-			return tsk;
-		}
+			var t = await Task.Run(() => {
+				var cusip = ReadCusip();
+				var cusipPrices = ReadPricesForCusips(cusip);
+				foreach (var clp in cusipPrices)
+					Raise(new CusipPriceEventArgs(clp.Cusip, clp.Price));
 
-		private bool ProcessFeedFileImp()
-		{
-			var cusip = ReadCusip();
+				return true;
+			});
 
-			var cusipPrices = ReadPricesForCusips(cusip);
-			foreach (var clp in cusipPrices)
-				Raise(new CusipPriceEventArgs(clp.Cusip, clp.Price));
-
-			return true;
+			return t;
 		}
 
 		private void Raise(CusipPriceEventArgs ea)

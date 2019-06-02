@@ -1,0 +1,3 @@
+Problem 2: Anagram Groups.
+Write a C++, (and C#) program that accepts a block of text (English words), and outputs the groups of words that are anagrams of each other.  
+For example, "apt", "tap" and "pat" are anagrams of each other.

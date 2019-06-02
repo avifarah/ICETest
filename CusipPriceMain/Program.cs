@@ -18,7 +18,9 @@ namespace CusipPriceMain
 					proc.CusipPriceHandler += ProcCusipPriceHandler;
 					var t = proc.ProcessFeedFile();
 
-					var rc = t.Result;			// Wait for the process to finish
+					// Something else can be done here
+
+					_ = t.Result;			// Wait for the feed file to complete processesing
 				}
 				catch (FeedException ex)
 				{
