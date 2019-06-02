@@ -1,0 +1,30 @@
+Problem
+Problem 1: Latest prices
+You are given a file formatted like this:
+
+CUSIP1
+Price
+Price
+Price
+.
+CUSIP2
+Price
+Price
+CUSIP3
+Price
+Price
+Price
+.
+Price
+CUSIP221
+Price
+.
+
+A CUSIP is a unique identifier of a security.  You can assume a CUSIP is just an 8-character alphanumeric string.
+Think of the file as a record of a day's prices for a set of securities identified by their CUSIPs.
+Each CUSIP may have any number of prices (e.g., 95.752, 101.255) following it in
+sequence, one per line.
+The prices can be considered to be ordered by time in ascending order, earliest to latest.
+
+Write a C++, (and C#) program that will print the closing (or latest) price for each CUSIP in the file. There are about 3,000,000 bonds in the universe.  
+100 prices ticks during the day is not unusual.  So, this file might contain 300 million lines, so your solution SHOULD NOT assume the entire file can fit in memory!

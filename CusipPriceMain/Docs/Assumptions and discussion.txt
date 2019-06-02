@@ -1,0 +1,40 @@
+Assumptions
+1)  A Cusip is followed by one or more price lines.  A Cusip line not followed by a price line indicates a corrupt feed file.
+2)  A price is a string of digits separated by a single period; explicitly, no comma separation for 1000s.
+3)  There are no extraneous characters in a CUSIP or price except potentially leading and trailing blank characters
+4)	A Price may have no digits infront of the decimal point but it must have at least one digit after the decimal point
+5)  Repeat Cusip in the file are an indication of a currupt feed file.
+6)	Last lines of feed file may be blank lines
+7)	The dot that you have in the description of the problem represents a continuation.  I struggled a little with it, Cusip1 followed
+	by prices followed by a period looking like a period is a sentinel.  However, Cusip2 followed by prices followed by Cusip3 is not
+	separated by a period, making it look like the period is an optional sentinel.  Then the next period is between 2 price lines.  As
+	such I decided that it means that the period, in this context, is equivalent to an elipses.
+
+
+Discussion
+A cusip is expected to match a line of characters according to the regular expression: "^\\s*\\w{8}\\s*$"
+A price is expected to match a line of characters according to the regular expression: "^\\s*\\d*\\.\\d+\\s*$"
+Any line not matching either Cusip, regular expressions, Price regular expressions or a sentinel "." line, is in an error
+
+Steps to solution
+1)  Open the file
+2)  Read the file line by line
+3)  For each line read take action as per the following state machine
+
+State machine
+The transision between states is the action of line read and matched against either a cusip RE or price RE
+State o: Start          Next possible states: c; x
+state c: Cusip          Next possible states: p; x
+state p: price          Next possible states: p, c, e; x
+state x: Exception
+state e: End
+
+The Start state (state o) is where we are before we read the first line of data, from the start point we can either read a cusip,
+encounter an exception, like the line does not match a cusip, or meet the EOF, which means that the file is empty.
+
+State c is the state that reached by reading a line and it matches the RE of Cusip.  From this state we can read another Cusip, meaning
+that this cusip contains no price list.  This cusip may be followed by a price, the more likely option, we can get to the EOF or an exception
+
+state p is the state that is reached by reading a line and it matches the RE of price.  From this state we can read another price, very likely.
+We may reach the EOF, we may read another Cusip or we may encounter an exception.
+
