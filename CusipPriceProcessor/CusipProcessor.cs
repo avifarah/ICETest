@@ -9,7 +9,7 @@ namespace CusipPriceProcessor
 {
 	public class CusipProcessor
 	{
-		private StreamReader _feedStream;
+		private readonly StreamReader _feedStream;
 		private int _currentLineCount = 0;
 
 		public CusipProcessor(StreamReader feedStream)
@@ -128,9 +128,6 @@ namespace CusipPriceProcessor
 			return t;
 		}
 
-		private void Raise(CusipPriceEventArgs ea)
-		{
-			CusipPriceHandler(this, ea);
-		}
+		private void Raise(CusipPriceEventArgs ea) => CusipPriceHandler(this, ea);
 	}
 }

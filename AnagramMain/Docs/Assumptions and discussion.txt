@@ -1,0 +1,38 @@
+Assumptions
+1)  Words are anagrams even if case comparison is not a match, so Tap and Apt are 
+    still anagrams, despite the fact the in the first word "T" is capitalized and in
+    the second "A" is capitalized.
+2)  A hyphen ("-"), en-dash and em-dash are not part of the word
+3)  Same word is not an anagram of itself, so "to" and "to" or "to" and "To" are not 
+    anagrams, they are the same word.
+4)  Letters that are not part of "A-Za-z" are not part of a word and are considered as
+    word delimiters.  This sat well with me except for a single quote which I
+    decided to leave out:
+        A single quote (') can represent a string delimiter ('...') usually a 
+        quotation within a quotation so for example: (he said: "she said: 'blah blah blah' 
+        and all were happy").  A single quote can also represent an apostrophe,
+        as in posesive. I decided to leave single quotes out for simplicity.
+        If we were to include an apostrophe as part of the word, we would need to 
+        distinguish between delimiters and apostrophes.  Which will call for 
+        distinguishing between an apostrophe followed by an "s" (like so: "...'s") 
+        and an "s" followed by an apostrophe (like so: "...s'"), as well as 
+        considering the "...'s" vs "...s'" when these constructs are within a single 
+        quote delimiters.  This seems to be doable but I decided to leave this 
+        complication out.
+
+
+Discussion
+A function as follows is an optimization:
+*   Convert each letter to the equivalent upper case numeric representation
+*   Add each of the letter's numeric representation as per the dictionary _letterRep in
+    the static class LetterRepresentation 
+*   The resulting number is a represemtation of the word.
+
+Given the above, anagrams necessarily have the same representation since the addiion 
+operation is abelean or commutative. however, not all words that have the same 
+representation are necessarily anagrams.
+
+Words are necessarily anagrams if:
+1)  Words comparison (case insensitive comparison) are different
+2)  The words have the same number of letters (this is an oprimization)
+3)  Sorting the letters of the words yields equal arrays of letters.

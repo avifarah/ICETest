@@ -4,8 +4,8 @@ namespace CusipPriceProcessor
 {
 	public static class State
 	{
-		private static Regex _cusipRe = new Regex(@"^\s*(?<cusip>\w{8})\s*$");
-		private static Regex _priceRe = new Regex(@"^\s*(?<price>\d*\.\d+)\s*$");
+		private static readonly Regex _cusipRe = new Regex(@"^\s*(?<cusip>\w{8})\s*$");
+		private static readonly Regex _priceRe = new Regex(@"^\s*(?<price>\d*\.\d+)\s*$");
 
 		public static string GetCusip(this string line)
 		{
