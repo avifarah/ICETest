@@ -173,10 +173,9 @@ adffh, dffha, ffhad, fhadf";
 			using (var anagramStream = new StreamReader(anagramMem))
 			{
 				var parser = new Parser(anagramStream, repSimple);
-				var dicWords = parser.GetAllWords();
 
 				// Act
-				var anagramLists = parser.ExtractAnagrams(dicWords);
+				var anagramLists = parser.GetAnagrams();
 
 				// Assert
 				Assert.Equal(3, anagramLists.Count);

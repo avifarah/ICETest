@@ -19,6 +19,7 @@ Assumptions
         considering the "...'s" vs "...s'" when these constructs are within a single 
         quote delimiters.  This seems to be doable but I decided to leave this 
         complication out.
+5)	The entire document of words fits in the computer memory
 
 
 Discussion

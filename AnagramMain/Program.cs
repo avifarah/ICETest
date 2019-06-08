@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace AnagramMain
 {
@@ -6,7 +7,17 @@ namespace AnagramMain
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			var fileName = @"Data\AnagramTest.txt";
+			using (var sr = new StreamReader(fileName))
+			{
+				var parser = new Parser(sr);
+				var anagrams = parser.GetAnagrams();
+				foreach (var anagramList in anagrams)
+				{
+					var anagramInList = string.Join(", ", anagramList);
+					Console.WriteLine(anagramInList);
+				}
+			}
 		}
 	}
 }

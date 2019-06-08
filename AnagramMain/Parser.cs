@@ -15,10 +15,10 @@ namespace AnagramMain
 		private readonly StreamReader _textStream;
 		private readonly ILetterRepresentation _rep;
 
-		public Parser(StreamReader stream, ILetterRepresentation rep)
+		public Parser(StreamReader stream, ILetterRepresentation rep = null)
 		{
 			_textStream = stream;
-			_rep = rep;
+			_rep = rep == null ? LetterRepresentation.Inst.CreateRep() : rep;
 		}
 
 		private readonly Regex _wordRe = new Regex(@"\b(?<word>[A-Za-z]+)\b");
@@ -51,7 +51,12 @@ namespace AnagramMain
 			return wordDic;
 		}
 
-		public List<List<Word>> ExtractAnagrams(Dictionary<long, List<Word>> wordDic)
+		/// <summary>
+		/// This method, ExtractAnagrams(..), is supposed to follow the GetAllWords().
+		/// </summary>
+		/// <param name="wordDic"></param>
+		/// <returns></returns>
+		private List<List<Word>> ExtractPotentialAnagrams(Dictionary<long, List<Word>> wordDic)
 		{
 			var anagramLists = new List<List<Word>>();
 
@@ -85,7 +90,10 @@ namespace AnagramMain
 
 						if (isAnagram == Word.WordAnagram.YesAnagram)
 						{
-							anagramLists[alc].Add(restOfWords[wc]);
+							// First make sure that it is not the same as any word in the list
+							var rc = anagramLists[alc].Any(w => string.Compare(w.WordValue, restOfWords[wc].WordValue, StringComparison.CurrentCultureIgnoreCase) == 0);
+							if (!rc)
+								anagramLists[alc].Add(restOfWords[wc]);
 							wordCounted = true;
 							break;
 						}
@@ -100,6 +108,30 @@ namespace AnagramMain
 			}
 
 			return anagramLists;
+		}
+
+		private List<List<string>> ExtractAnagrams(List<List<Word>> anagramLists)
+		{
+			var trueAnagrams = new List<List<string>>();
+			foreach (var anList in anagramLists)
+			{
+				if (anList.Count == 1) continue;
+				trueAnagrams.Add(anList.Select(a => a.WordValue).ToList());
+			}
+
+			return trueAnagrams;
+		}
+
+		/// <summary>
+		/// Since ExtractAnagrams(..) does not fucntion on its own it must follow 
+		/// </summary>
+		/// <returns></returns>
+		public List<List<string>> GetAnagrams()
+		{
+			var dicWords = GetAllWords();
+			var anagramLists = ExtractPotentialAnagrams(dicWords);
+			var trueLists = ExtractAnagrams(anagramLists);
+			return trueLists;
 		}
 	}
 }
