@@ -12,10 +12,7 @@ namespace CusipPriceProcessor
 		private readonly StreamReader _feedStream;
 		private int _currentLineCount = 0;
 
-		public CusipProcessor(StreamReader feedStream)
-		{
-			_feedStream = feedStream;
-		}
+		public CusipProcessor(StreamReader feedStream) => _feedStream = feedStream;
 
 		/// <summary>
 		/// This method will be used for the first line of the feed file to be read which is expected to be a cusip

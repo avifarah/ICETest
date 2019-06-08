@@ -7,7 +7,7 @@ void Main()
 {
 	var letters = Enumerable.Range(0, 26).Select(i => ((char)((int)'a' + i)));
 
-	Console.WriteLine($"{new string(' ', 8)}private static Dictionary<char, long> LetterRep = new Dictionary<char, long> {{");
+	Console.WriteLine($"{new string(' ', 8)}private static Dictionary<char, long> DefaultLetterRep = new Dictionary<char, long> {{");
 	Console.WriteLine(string.Join($",{Environment.NewLine}", letters.Select(l => {
 		var rep = BetterRandom.NextInt();
 		return  $"{new string(' ', 12)}{{ '{l}', {rep,10}L }},\r\n" +			// Lower case letter with a representation
