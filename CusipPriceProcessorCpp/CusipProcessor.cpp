@@ -1,13 +1,128 @@
-#pragma once
-class CusipProcessor
+#include "pch.h"
+#include "CusipProcessor.h"
+#include "..\\UtilsCpp\FeedExceptionCpp.h"
+#include <limits>
+#include <sstream>
+
+static regex cusipRe("^\\s*(\\w{8}\\s*$");
+static regex priceRe("^\\s*(\\d*\\.\\d+)\\s*$");
+
+CusipProcessor::CusipProcessor(ifstream& feedStr) : feedStream(feedStr), currentLineCount(0)
 {
-public:
-	CusipProcessor();
-	~CusipProcessor();
-};
+}
+
+string CusipProcessor::ReadCusip()
+{
+	if (feedStream.eof()) return string("");
+
+	string cusip;
+	getline(feedStream, cusip);
+	++currentLineCount;
+	if (cusip.empty())
+		throw FeedExceptionCpp("First line of Feed is not a cusip", currentLineCount, cusip);
+
+	return cusip;
+}
+
+double CusipProcessor::GetPrice(string line)
+{
+	smatch matches;
+	regex_search(line, matches, priceRe);
+	if (matches.empty())
+		return numeric_limits<double>::lowest();
+
+	auto sPrice = matches.str(1);
+	auto price = atof(sPrice.c_str());
+	return price;
+}
+
+string CusipProcessor::GetCusip(string line)
+{
+	smatch matches;
+	regex_search(line, matches, cusipRe);
+	if (matches.empty())
+		return string("");
+
+	auto cusip = matches.str(1);
+	return cusip;
+}
+
+
+CusipLatestPrice CusipProcessor::ReadPricesForCusips(string cusip)
+{
+	auto isPreviousBlank = false;
+
+	// Loop through the cusips
+	for (; ; )
+	{
+		if (feedStream.eof()) return CusipLatestPrice::NoValue;
+
+		auto prevPrice = numeric_limits<double>::lowest();
+
+		// Loop through prices
+		for (; ; )
+		{
+			if (feedStream.eof())
+			{
+				if (prevPrice == numeric_limits<double>::lowest())
+				{
+					stringstream msg;
+					msg << "Cusip " << cusip << " contains no price value";
+					throw FeedExceptionCpp(msg.str(), currentLineCount);
+				}
+				return CusipLatestPrice(cusip, prevPrice);
+			}
+
+			++currentLineCount;
+
+			string line;
+			feedStream >> line;
+
+			// It is acceptable for the last lines to be blank lines
+			if (line.c_str() == "")
+			{
+				isPreviousBlank = true;
+				continue;
+			}
+			else if (isPreviousBlank)
+			{
+				throw FeedExceptionCpp("A blank line in the middle of the file indicates a corrupt Feed file", currentLineCount);
+			}
+
+			auto price = GetPrice(line);
+			if (price == numeric_limits<double>::lowest())
+			{
+				auto nextCusip = GetCusip(line);
+				if (nextCusip == string(""))
+				{
+					throw FeedExceptionCpp("Line is neither a cusip nor a price", currentLineCount, line);
+				}
+				if (prevPrice == numeric_limits<double>::lowest())
+				{
+					stringstream msg;
+					msg << "Cusip " << cusip << " contains no price value";
+					throw FeedExceptionCpp(msg.str(), currentLineCount, line);
+				}
+
+				auto prevCusip = cusip;
+				cusip = nextCusip;
+				return CusipLatestPrice(prevCusip, prevPrice);
+			}
+		}
+	}
+}
 
 
 /*
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using Utils;
+
+namespace CusipPriceProcessor
+{
 	public class CusipProcessor
 	{
 		private readonly StreamReader _feedStream;
@@ -128,5 +243,5 @@ public:
 
 		private void Raise(CusipPriceEventArgs ea) => CusipPriceHandler(this, ea);
 	}
-
+}
 */

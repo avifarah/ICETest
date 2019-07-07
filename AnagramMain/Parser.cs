@@ -18,7 +18,7 @@ namespace AnagramMain
 		public Parser(StreamReader stream, ILetterRepresentation rep = null)
 		{
 			_textStream = stream;
-			_rep = rep == null ? LetterRepresentation.Inst.CreateRep() : rep;
+			_rep = rep ?? LetterRepresentation.Inst.CreateRep();
 		}
 
 		private readonly Regex _wordRe = new Regex(@"\b(?<word>[A-Za-z]+)\b");

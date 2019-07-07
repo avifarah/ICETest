@@ -1,1 +1,0 @@
-Please see the Docs directory of the equivalent C# project

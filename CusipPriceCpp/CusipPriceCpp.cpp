@@ -1,11 +1,25 @@
 // CusipPriceCpp.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <fstream>
 #include <iostream>
+#include <fstream>
+#include <iostream>
+#include <windows.h>
+#include <stdio.h>
+#include "..\\CusipPriceProcessorCpp\CusipProcessor.h"
+
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	//ifstream ifs("G:\\Dev\\ICE.Core\\CusipPriceTest\\CusipPrice-1.txt");
+	ifstream ifs("CusipPrice1-Good.txt");
+	auto cp = CusipProcessor(ifs);
+	auto cusip = cp.ReadCusip();
+	cout << cusip << endl;
+
+	cout << "Done" << endl << endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
