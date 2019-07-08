@@ -8,18 +8,33 @@
 #include <windows.h>
 #include <stdio.h>
 #include "..\\CusipPriceProcessorCpp\CusipProcessor.h"
+#include "FeedExceptionCpp.h"
 
 using namespace std;
 
 int main()
 {
-	//ifstream ifs("G:\\Dev\\ICE.Core\\CusipPriceTest\\CusipPrice-1.txt");
-	ifstream ifs("CusipPrice1-Good.txt");
-	auto cp = CusipProcessor(ifs);
-	auto cusip = cp.ReadCusip();
-	cout << cusip << endl;
+	try
+	{
+		//ifstream ifs("G:\\Dev\\ICE.Core\\CusipPriceTest\\CusipPrice-1.txt");
+		ifstream ifs("CusipPrice1-Good.txt");
+		auto cp = CusipProcessor(ifs);
+		auto cusip = cp.ReadCusip();
+		cout << cusip << endl;
 
-	cout << "Done" << endl << endl;
+		while (true)
+		{
+			auto latestPrice = cp.ReadPricesForCusips();
+			if (latestPrice == CusipLatestPrice::NoValue) break;
+			cout << "Cusip: " << latestPrice.GetCusip() << ", Price: " << latestPrice.GetPrice() << endl;
+		}
+	}
+	catch (FeedExceptionCpp& ex)
+	{
+		cout << "Exception caught: " << ex.Message << ".  At line: " << ex.CurrentLineCountOfException << endl;
+	}
+
+	cout << endl << "Done" << endl << endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

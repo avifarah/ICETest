@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -25,4 +26,7 @@ public:
 	string GetCusip();
 	double GetPrice();
 	bool HasValue();
+
+	bool operator ==(const CusipLatestPrice& rhs) const;
+	bool operator !=(const CusipLatestPrice& rhs) const;
 };

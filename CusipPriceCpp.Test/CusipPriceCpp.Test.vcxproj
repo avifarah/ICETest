@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CusipLatestPriceTest.cpp" />
     <ClCompile Include="CusipPriceCpp.Test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -167,9 +168,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UtilsTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CusipPrice-1.txt" />
@@ -178,6 +181,15 @@
     <ProjectReference Include="..\CusipPriceCpp\CusipPriceCpp.vcxproj">
       <Project>{544812d6-09d6-4c14-baba-6f3c3bb44108}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\CusipPriceProcessorCpp\CusipPriceProcessorCpp.vcxproj">
+      <Project>{8ffd6f5a-7c33-446c-b630-c61ace64330a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\UtilsCpp\UtilsCpp.vcxproj">
+      <Project>{9df351fa-2f98-478b-853b-1644382bf6a7}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CusipPriceCpp.Test.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

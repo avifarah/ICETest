@@ -18,16 +18,18 @@ using namespace std;
 class DLLEXPORT CusipProcessor
 {
 private:
-	//regex cusipRe;
-	//regex priceRe;
+	static regex cusipRe;
+	static regex priceRe;
 	ifstream& feedStream;
 	int currentLineCount;
 	double GetPrice(string line);
 	string GetCusip(string line);
+	string NextCusip;
+	double PreviousPrice;
 
 public:
 	CusipProcessor(ifstream& feedStr);
 	string ReadCusip();
-	CusipLatestPrice ReadPricesForCusips(string cusip);
+	CusipLatestPrice ReadPricesForCusips();
 };
 

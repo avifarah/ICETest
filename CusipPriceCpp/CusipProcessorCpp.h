@@ -12,7 +12,8 @@ class CusipProcessorCpp
 private:
 	static regex cusipRe;
 	static regex priceRe;
-	ifstream& feedStream;
+	//ifstream& feedStream;
+	istream& feedStream;
 	int currentLineCount = 0;
 
 public:
