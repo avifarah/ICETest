@@ -8,7 +8,7 @@
 regex CusipProcessor::cusipRe("^\\s*(\\w{8})\\s*$");
 regex CusipProcessor::priceRe("^\\s*(\\d*\\.\\d+)\\s*$");
 
-CusipProcessor::CusipProcessor(ifstream& feedStr) : feedStream(feedStr), currentLineCount(0), NextCusip(""), PreviousPrice(0.0)
+CusipProcessor::CusipProcessor(ifstream& feedStr) : feedStream(feedStr), currentLineCount(1), NextCusip(""), PreviousPrice(0.0)
 {
 }
 
@@ -74,10 +74,31 @@ CusipLatestPrice CusipProcessor::ReadPricesForCusips()
 				return CusipLatestPrice(cusip, PreviousPrice);
 			}
 
-			++currentLineCount;
+			string line = string("");
+			if (feedStream.peek() == '\n')
+			{
+				// EOL is expected, we are at the end of the previous line
+				istreambuf_iterator<char> iter(feedStream);
+				++iter;
+				++currentLineCount;
+			}
 
-			string line;
-			feedStream >> line;
+			if (feedStream.peek() == '\n')
+			{
+				istreambuf_iterator<char> iter(feedStream);
+				++iter;
+				++currentLineCount;
+			}
+			else if (feedStream.peek() == '\r')
+			{
+				// Advance the file by 1 char and do not inc line count
+				istreambuf_iterator<char> iter(feedStream);
+				++iter;
+			}
+			else
+			{
+				feedStream >> line;
+			}
 
 			// It is acceptable for the last lines to be blank lines
 			if (Trim(line) == string(""))
@@ -87,7 +108,7 @@ CusipLatestPrice CusipProcessor::ReadPricesForCusips()
 			}
 			else if (isPreviousBlank)
 			{
-				throw FeedExceptionCpp("A blank line in the middle of the file indicates a corrupt Feed file", currentLineCount);
+				throw FeedExceptionCpp("A blank line in the middle of the file indicates a corrupt Feed file", currentLineCount, line);
 			}
 
 			auto price = GetPrice(line);
@@ -107,7 +128,9 @@ CusipLatestPrice CusipProcessor::ReadPricesForCusips()
 
 				auto prevCusip = cusip;
 				NextCusip = nextCusip;
-				return CusipLatestPrice(prevCusip, PreviousPrice);
+				price = PreviousPrice;
+				PreviousPrice = numeric_limits<double>::lowest();
+				return CusipLatestPrice(prevCusip, price);
 			}
 
 			PreviousPrice = price;

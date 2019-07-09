@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="CusipPrice-1.txt" />
+    <Text Include="CusipPrice-extraSpace-Error.txt" />
+    <Text Include="CusipPrice-CusipCusip-Error.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CusipPriceCpp.Test.rc">

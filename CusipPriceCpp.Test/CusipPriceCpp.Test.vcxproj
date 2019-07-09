@@ -176,6 +176,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="CusipPrice-1.txt" />
+    <Text Include="CusipPrice-CusipCusip-Error.txt" />
+    <Text Include="CusipPrice-extraSpace-Error.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CusipPriceCpp\CusipPriceCpp.vcxproj">

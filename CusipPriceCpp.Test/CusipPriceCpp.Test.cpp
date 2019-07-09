@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "..\\CusipPriceProcessorCpp\CusipProcessor.h"
+#include "..\\UtilsCpp\FeedExceptionCpp.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -39,6 +40,61 @@ namespace CusipPriceCppTest
 			Assert::AreEqual(expected.GetCusip(), actual.GetCusip());
 			Assert::AreEqual(expected.GetPrice(), actual.GetPrice());
 			Assert::AreEqual(expected.HasValue(), actual.HasValue());
+		}
+
+		TEST_METHOD(ReadPriceTest_ExtraSpce_Error)
+		{
+			// Arrange
+			auto expectedMsg = string("A blank line in the middle of the file indicates a corrupt Feed file");
+			auto expectedLc = 4;
+			auto expectedLine = string("B2345678");
+
+			try
+			{
+				// Arrange
+				ifstream ifs("G:\\Dev\\ICE.Core\\CusipPriceCpp.Test\\CusipPrice-extraSpace-Error.txt");
+				auto cp = CusipProcessor(ifs);
+
+				// Act
+				auto cusip = cp.ReadCusip();
+				auto latestPrice = cp.ReadPricesForCusips();
+				Assert::Fail();
+			}
+			catch (FeedExceptionCpp ex)
+			{
+				// Assert
+				Assert::AreEqual(expectedMsg, ex.Message);
+				Assert::AreEqual(expectedLc, ex.CurrentLineCountOfException);
+				Assert::AreEqual(expectedLine, ex.LineOfException);
+			}
+		}
+
+		TEST_METHOD(ReadPriceTest_CusipCusip_Error)
+		{
+			// Arrange
+			auto expectedMsg = string("Cusip B2345678 contains no price value");
+			auto expectedLc = 4;
+			auto expectedLine = string("C2345678");
+
+			try
+			{
+				// Arrange
+				ifstream ifs("G:\\Dev\\ICE.Core\\CusipPriceCpp.Test\\CusipPrice-CusipCusip-Error.txt");
+				auto cp = CusipProcessor(ifs);
+
+				// Act
+				auto cusip = cp.ReadCusip();
+				auto latestPrice = cp.ReadPricesForCusips();
+				auto latestPrice2 = cp.ReadPricesForCusips();
+				Assert::Fail();
+			}
+			catch (FeedExceptionCpp ex)
+			{
+				// Assert
+				Assert::AreEqual(expectedMsg, ex.Message);
+				Assert::AreEqual(expectedLc, ex.CurrentLineCountOfException);
+				Assert::AreEqual(expectedLine, ex.LineOfException);
+			}
 		}
 	};
 }
