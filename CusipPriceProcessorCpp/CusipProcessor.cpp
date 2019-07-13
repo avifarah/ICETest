@@ -1,14 +1,25 @@
 #include "pch.h"
-#include "CusipProcessor.h"
-#include "..\\UtilsCpp\FeedExceptionCpp.h"
 #include <limits>
 #include <sstream>
+#include <regex>
+#include "CusipProcessor.h"
+#include "..\\UtilsCpp\FeedExceptionCpp.h"
 #include "..\\UtilsCpp\StringExt.h"
 
-regex CusipProcessor::cusipRe("^\\s*(\\w{8})\\s*$");
-regex CusipProcessor::priceRe("^\\s*(\\d*\\.\\d+)\\s*$");
+using namespace std;
 
-CusipProcessor::CusipProcessor(ifstream& feedStr) : feedStream(feedStr), currentLineCount(1), NextCusip(""), PreviousPrice(0.0)
+static regex CusipReCusipProcessor = regex("^\\s*(\\w{8})\\s*$");
+static regex PriceReCusipProcessor = regex("^\\s*(\\d*\\.\\d+)\\s*$");
+static string emptyNextCusipCusipProcessor = string("");
+
+regex& CusipProcessor::cusipRe(CusipReCusipProcessor);
+regex& CusipProcessor::priceRe(PriceReCusipProcessor);
+
+CusipProcessor::CusipProcessor(ifstream& feedStr) : feedStream(feedStr), currentLineCount(0), NextCusip(emptyNextCusipCusipProcessor), PreviousPrice(0.0)
+{
+}
+
+CusipProcessor::~CusipProcessor()
 {
 }
 
@@ -20,7 +31,7 @@ string CusipProcessor::ReadCusip()
 	getline(feedStream, cusip);
 	++currentLineCount;
 	if (cusip.empty())
-		throw FeedExceptionCpp("First line of Feed is not a cusip", currentLineCount, cusip);
+		throw FeedExceptionCpp(string("First line of Feed is not a cusip"), currentLineCount, cusip);
 
 	NextCusip = cusip;
 	return cusip;
@@ -38,12 +49,12 @@ double CusipProcessor::GetPrice(string line)
 	return price;
 }
 
-string CusipProcessor::GetCusip(string line)
+string& CusipProcessor::GetCusip(string line)
 {
 	smatch matches;
 	regex_search(line, matches, cusipRe);
 	if (matches.empty())
-		return string("");
+		return emptyNextCusipCusipProcessor;
 
 	auto cusip = matches.str(1);
 	return cusip;
@@ -77,14 +88,6 @@ CusipLatestPrice CusipProcessor::ReadPricesForCusips()
 			string line = string("");
 			if (feedStream.peek() == '\n')
 			{
-				// EOL is expected, we are at the end of the previous line
-				istreambuf_iterator<char> iter(feedStream);
-				++iter;
-				++currentLineCount;
-			}
-
-			if (feedStream.peek() == '\n')
-			{
 				istreambuf_iterator<char> iter(feedStream);
 				++iter;
 				++currentLineCount;
@@ -94,10 +97,12 @@ CusipLatestPrice CusipProcessor::ReadPricesForCusips()
 				// Advance the file by 1 char and do not inc line count
 				istreambuf_iterator<char> iter(feedStream);
 				++iter;
+				continue;
 			}
 			else
 			{
-				feedStream >> line;
+				getline(feedStream, line);
+				++currentLineCount;
 			}
 
 			// It is acceptable for the last lines to be blank lines

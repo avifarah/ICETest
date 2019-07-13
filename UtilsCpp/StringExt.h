@@ -2,13 +2,13 @@
 
 #include <string>
 
-using namespace std;
 
-
-#ifdef  UTILS_EXPORTS
-	#define DLLEXPORT __declspec(dllexport)
+#ifdef  UTILSCPP_EXPORTS
+	#define UTILS_DLLEXPORT __declspec(dllexport)
 #else
-	#define DLLEXPORT __declspec(dllimport)
+	#define UTILS_DLLEXPORT __declspec(dllimport)
 #endif
 
-DLLEXPORT string Trim(string text);
+using namespace std;
+
+UTILS_DLLEXPORT string Trim(string text);

@@ -63,9 +63,9 @@ namespace CusipPriceCppTest
 			catch (FeedExceptionCpp ex)
 			{
 				// Assert
-				Assert::AreEqual(expectedMsg, ex.Message);
-				Assert::AreEqual(expectedLc, ex.CurrentLineCountOfException);
-				Assert::AreEqual(expectedLine, ex.LineOfException);
+				Assert::AreEqual(expectedMsg, ex.GetExMessage());
+				Assert::AreEqual(expectedLc, ex.GetCurrentLineCountOfException());
+				Assert::AreEqual(expectedLine, ex.GetLineOfException());
 			}
 		}
 
@@ -91,9 +91,62 @@ namespace CusipPriceCppTest
 			catch (FeedExceptionCpp ex)
 			{
 				// Assert
-				Assert::AreEqual(expectedMsg, ex.Message);
-				Assert::AreEqual(expectedLc, ex.CurrentLineCountOfException);
-				Assert::AreEqual(expectedLine, ex.LineOfException);
+				Assert::AreEqual(expectedMsg, ex.GetExMessage());
+				Assert::AreEqual(expectedLc, ex.GetCurrentLineCountOfException());
+				Assert::AreEqual(expectedLine, ex.GetLineOfException());
+			}
+		}
+
+		TEST_METHOD(ReadPriceTest_FirstLineBlank_Error)
+		{
+			// Arrange
+			auto expectedMsg = string("First line of Feed is not a cusip");
+			auto expectedLc = 1;
+			auto expectedLine = string("");
+
+			try
+			{
+				// Arrange
+				ifstream ifs("G:\\Dev\\ICE.Core\\CusipPriceCpp.Test\\CusipPrice-FirstLineBlank.txt");
+				auto cp = CusipProcessor(ifs);
+
+				// Act
+				auto cusip = cp.ReadCusip();
+				Assert::Fail();
+			}
+			catch (FeedExceptionCpp ex)
+			{
+				// Assert
+				Assert::AreEqual(expectedMsg, ex.GetExMessage());
+				Assert::AreEqual(expectedLc, ex.GetCurrentLineCountOfException());
+				Assert::AreEqual(expectedLine, ex.GetLineOfException());
+			}
+		}
+
+		TEST_METHOD(ReadPriceTest_SecondLineBlank_Error)
+		{
+			// Arrange
+			auto expectedMsg = string("A blank line in the middle of the file indicates a corrupt Feed file");
+			auto expectedLc = 3;
+			auto expectedLine = string("123.456");
+
+			try
+			{
+				// Arrange
+				ifstream ifs("G:\\Dev\\ICE.Core\\CusipPriceCpp.Test\\CusipPrice-SeondLineBlank.txt");
+				auto cp = CusipProcessor(ifs);
+
+				// Act
+				auto cusip = cp.ReadCusip();
+				auto latestPrice = cp.ReadPricesForCusips();
+				Assert::Fail();
+			}
+			catch (FeedExceptionCpp ex)
+			{
+				// Assert
+				Assert::AreEqual(expectedMsg, ex.GetExMessage());
+				Assert::AreEqual(expectedLc, ex.GetCurrentLineCountOfException());
+				Assert::AreEqual(expectedLine, ex.GetLineOfException());
 			}
 		}
 	};

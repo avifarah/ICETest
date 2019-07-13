@@ -178,6 +178,8 @@
     <Text Include="CusipPrice-1.txt" />
     <Text Include="CusipPrice-CusipCusip-Error.txt" />
     <Text Include="CusipPrice-extraSpace-Error.txt" />
+    <Text Include="CusipPrice-FirstLineBlank.txt" />
+    <Text Include="CusipPrice-SeondLineBlank.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CusipPriceCpp\CusipPriceCpp.vcxproj">
@@ -185,6 +187,9 @@
     </ProjectReference>
     <ProjectReference Include="..\CusipPriceProcessorCpp\CusipPriceProcessorCpp.vcxproj">
       <Project>{8ffd6f5a-7c33-446c-b630-c61ace64330a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LetterRepresentationCpp\LetterRepresentationCpp.vcxproj">
+      <Project>{96ee33f0-ad53-4970-a88e-a40fd4112945}</Project>
     </ProjectReference>
     <ProjectReference Include="..\UtilsCpp\UtilsCpp.vcxproj">
       <Project>{9df351fa-2f98-478b-853b-1644382bf6a7}</Project>

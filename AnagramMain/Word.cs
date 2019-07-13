@@ -6,21 +6,21 @@ namespace AnagramMain
 {
 	public struct Word : IEquatable<Word>
 	{
-		public enum WordAnagram
-		{
-			YesAnagram,
-			SameWord,
-			NotAnagram
-		}
+		public enum WordAnagram { YesAnagram, SameWord, NotAnagram }
 
+		/// <summary>The original value of the word</summary>
 		public string WordValue { get; }
 
+		/// <summary>A key for the word shared by all anagrams.</summary>
 		public string WordKey { get; private set; }
 
+		/// <summary>Numerical representation of the word</summary>
 		public long WordRepresentation { get; }
 
+		/// <summary>Line count where word was found</summary>
 		public int LineCount { get; }
 
+		/// <summary>Count of this word index in the current line</summary>
 		public int WordCount { get; }
 
 		private bool KeySet { get; set; }

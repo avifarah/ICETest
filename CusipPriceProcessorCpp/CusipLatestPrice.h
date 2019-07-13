@@ -6,15 +6,17 @@
 using namespace std;
 
 #ifdef  CUSIPPRICEPROCESSORCPP_EXPORTS
-	#define DLLEXPORT __declspec(dllexport)
+	#define CUSIP_LATEST_PRICE_EXPORT __declspec(dllexport)
+	#pragma message("__declspec(dllexport)")
 #else
-	#define DLLEXPORT __declspec(dllimport)
+	#define CUSIP_LATEST_PRICE_EXPORT __declspec(dllimport)
+	#pragma message("__declspec(dllimport)")
 #endif
 
-class DLLEXPORT CusipLatestPrice
+class CUSIP_LATEST_PRICE_EXPORT CusipLatestPrice
 {
 private:
-	string Cusip;
+	string& Cusip;
 	double Price;
 	bool hasValue;
 

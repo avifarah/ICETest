@@ -2,21 +2,31 @@
 
 #include <string>
 
-#ifdef  UTILS_EXPORTS
-	#define DLLEXPORT __declspec(dllexport)
+
+#ifdef  UTILSCPP_EXPORTS
+	#define UTILS_DLLEXPORT __declspec(dllexport)
+	#pragma message("__declspec(dllexport)")
 #else
-	#define DLLEXPORT __declspec(dllimport)
+	#define UTILS_DLLEXPORT __declspec(dllimport)
+	#pragma message("__declspec(dllimport)")
 #endif
 
-class DLLEXPORT FeedExceptionCpp
+using namespace std;
+
+class UTILS_DLLEXPORT FeedExceptionCpp
 {
+private:
+	string& Message;
+	int CurrentLineCountOfException;
+	string& LineOfException;
+
 public:
-	FeedExceptionCpp(std::string message, int lineCountOfException = -1, std::string lineOfException = "");
+	FeedExceptionCpp(string message, int lineCountOfException = -1, string lineOfException = "");
 	~FeedExceptionCpp();
 
-	std::string Message;
-	int CurrentLineCountOfException;
-	std::string LineOfException;
+	string GetExMessage();
+	int GetCurrentLineCountOfException();
+	string GetLineOfException();
 };
 
 

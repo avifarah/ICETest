@@ -181,6 +181,37 @@ C2345678
 				Assert.True(string.IsNullOrEmpty(ex.LineOfException));
 			}
 		}
+
+		[Fact]
+		public void ReadPricesForCusips_LeadingLineIsBalnk_Failure()
+		{
+			// Arrange
+			const string expectedMsg = "First line of Feed is not a cusip";
+			const int expectedLineCount = 1;
+			var feed = @"
+A2345678
+123.456
+";
+			var byteArray = Encoding.UTF8.GetBytes(feed);
+			using (var feedMem = new MemoryStream(byteArray))
+			using (var feedStream = new StreamReader(feedMem))
+			{
+				var proc = new CusipProcessor(feedStream);
+
+				try
+				{
+					// Act
+					var cusip = proc.ReadCusip();
+				}
+				catch (FeedException ex)
+				{
+					// Assert
+					Assert.Equal(expectedMsg, ex.Message);
+					Assert.Equal(expectedLineCount, ex.CurrentLineCountOfException);
+					Assert.True(string.IsNullOrEmpty(ex.LineOfException));
+				}
+			}
+		}
 	}
 }
 
