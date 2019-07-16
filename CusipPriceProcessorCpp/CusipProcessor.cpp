@@ -49,7 +49,7 @@ double CusipProcessor::GetPrice(string line)
 	return price;
 }
 
-string& CusipProcessor::GetCusip(string line)
+string CusipProcessor::GetCusip(string line)
 {
 	smatch matches;
 	regex_search(line, matches, cusipRe);

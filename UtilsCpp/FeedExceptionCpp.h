@@ -16,9 +16,9 @@ using namespace std;
 class UTILS_DLLEXPORT FeedExceptionCpp
 {
 private:
-	string& Message;
+	string Message;
 	int CurrentLineCountOfException;
-	string& LineOfException;
+	string LineOfException;
 
 public:
 	FeedExceptionCpp(string message, int lineCountOfException = -1, string lineOfException = "");

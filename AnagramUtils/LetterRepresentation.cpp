@@ -40,7 +40,7 @@ LetterRepresentation::LetterRepresentation() : LetterRep(DefaultLetterRep)
 {
 }
 
-LetterRepresentation::LetterRepresentation(map<char, long> dic): LetterRep(dic)
+LetterRepresentation::LetterRepresentation(map<char, long> dic) : LetterRep(dic)
 {
 }
 
@@ -65,6 +65,6 @@ long LetterRepresentation::WordRep(string word, int lineCount /*= 0*/, int wordC
 
 		wordRep += LetterRep[letter];
 	}
-	
+
 	return wordRep;
 }

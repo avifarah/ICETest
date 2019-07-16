@@ -5,12 +5,12 @@
 using namespace std;
 
 
-#ifdef  LETTERREPRESENTATIONCPP_EXPORTS
-	#define LETTERDLLEXPORT __declspec(dllexport)
-	#pragma message ("__declspec(dllexport)")
+#ifdef  ANAGRAMUTILS_EXPORTS
+#define LETTERDLLEXPORT __declspec(dllexport)
+#pragma message ("__declspec(dllexport)")
 #else
-	#define LETTERDLLEXPORT __declspec(dllimport)
-	#pragma message ("__declspec(dllimport)")
+#define LETTERDLLEXPORT __declspec(dllimport)
+#pragma message ("__declspec(dllimport)")
 #endif
 
 class LETTERDLLEXPORT AnagramException

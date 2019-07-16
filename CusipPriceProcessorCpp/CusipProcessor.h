@@ -24,10 +24,11 @@ private:
 	static regex& priceRe;
 	ifstream& feedStream;
 	int currentLineCount;
-	double GetPrice(string line);
-	string& GetCusip(string line);
-	string& NextCusip;
+	string NextCusip;
 	double PreviousPrice;
+
+	double GetPrice(string line);
+	string GetCusip(string line);
 
 public:
 	CusipProcessor(ifstream& feedStr);

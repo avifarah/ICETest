@@ -16,7 +16,7 @@ using namespace std;
 class CUSIP_LATEST_PRICE_EXPORT CusipLatestPrice
 {
 private:
-	string& Cusip;
+	string Cusip;
 	double Price;
 	bool hasValue;
 

@@ -5,12 +5,12 @@
 
 using namespace std;
 
-#ifdef LETTERREPRESENTATIONCPP_EXPORTS
-	#define LETTERDLLEXPORT __declspec(dllexport)
-	#pragma message ("__declspec(dllexport)")
+#ifdef ANAGRAMUTILS_EXPORTS
+#define LETTERDLLEXPORT __declspec(dllexport)
+#pragma message ("__declspec(dllexport)")
 #else
-	#define LETTERDLLEXPORT __declspec(dllimport)
-	#pragma message ("__declspec(dllimport)")
+#define LETTERDLLEXPORT __declspec(dllimport)
+#pragma message ("__declspec(dllimport)")
 #endif
 
 class LETTERDLLEXPORT Word
@@ -35,9 +35,10 @@ public:
 	bool operator ==(Word& rhs) const;
 	bool operator !=(Word& rhs) const;
 
-	string SortWord(Word& word);
-	bool IsWordSame(Word word1, Word word2);
-	WordAnagram IsWordAnagram(Word& word1, Word& word2);
+	static string SortWord(Word& word);
+	static bool IsWordSame(Word word1, Word word2);
+	static WordAnagram IsWordAnagram(Word& word1, Word& word2);
 };
+
 
 

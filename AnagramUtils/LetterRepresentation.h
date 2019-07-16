@@ -6,12 +6,12 @@
 
 using namespace std;
 
-#ifdef  LETTERREPRESENTATIONCPP_EXPORTS
-	#define LETTEREXPORT __declspec(dllexport)
-	#pragma message ("__declspec(dllexport)")
+#ifdef  ANAGRAMUTILS_EXPORTS
+#define LETTEREXPORT __declspec(dllexport)
+#pragma message ("__declspec(dllexport)")
 #else
-	#define LETTEREXPORT __declspec(dllimport)
-	#pragma message ("__declspec(dllimport)")
+#define LETTEREXPORT __declspec(dllimport)
+#pragma message ("__declspec(dllimport)")
 #endif
 
 class LETTEREXPORT LetterRepresentation

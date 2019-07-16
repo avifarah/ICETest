@@ -13,7 +13,6 @@ using namespace std;
 	#pragma message ("__declspec(dllimport)")
 #endif
 
-
 class ANAGRAM_DLLEXPORT Utils
 {
 public:
