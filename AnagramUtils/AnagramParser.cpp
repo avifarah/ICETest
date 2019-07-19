@@ -5,7 +5,7 @@
 
 using namespace std;
 
-static regex AnagramParserRe = regex("\\b(?<word>[A-Za-z]+)\\b");
+static regex AnagramParserRe = regex("\\b([A-Za-z]+)\\b");
 regex& AnagramParser::WordRe(AnagramParserRe);
 
 AnagramParser::AnagramParser(ifstream& textStream) : TextStream(textStream), Rep(LetterRepresentation())

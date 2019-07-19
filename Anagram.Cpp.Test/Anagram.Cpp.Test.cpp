@@ -11,6 +11,7 @@ namespace AnagramCppTest
 		
 		TEST_METHOD(TestMethod1)
 		{
+			Assert::AreEqual(1, 1);
 		}
 	};
 }

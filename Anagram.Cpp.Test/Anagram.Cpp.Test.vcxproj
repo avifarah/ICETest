@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{A7239152-4399-440D-9452-60BE63374FCF}</ProjectGuid>
+    <ProjectGuid>{A98F679E-EC37-4423-AA41-29C738FC93D6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AnagramCppTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -160,16 +160,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AnagramCpp.Test.cpp" />
+    <ClCompile Include="Anagram.Cpp.Test.cpp" />
+    <ClCompile Include="Anagram.LetterRepresentation.Test.cpp" />
+    <ClCompile Include="AnagramCppException.Test.cpp" />
+    <ClCompile Include="AnagramCppWord.Test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="AnagramUtil.Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnagramUtils\AnagramUtils.vcxproj">
+      <Project>{9eedf084-fbe4-4412-9711-73c40782c2f4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

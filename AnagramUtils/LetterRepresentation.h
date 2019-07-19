@@ -17,7 +17,7 @@ using namespace std;
 class LETTEREXPORT LetterRepresentation
 {
 private:
-	map<char, long>& LetterRep;
+	map<char, long> LetterRep;
 
 public:
 	LetterRepresentation();

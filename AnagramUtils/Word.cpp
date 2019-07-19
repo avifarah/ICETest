@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "..\\AnagramUtils\Utils.h"
+#include "..\\AnagramUtils\AnagramException.h"
 #include "Word.h"
 
 using namespace std;
@@ -21,7 +22,11 @@ Word::~Word()
 
 string Word::GetWordValue() { return WordValue; }
 
-string Word::GetWordKey() { return WordKey; }
+string Word::GetWordKey()
+{
+	if (KeySet) return WordKey;
+	throw AnagramException("WordKey was not set", WordValue, LineCount, WordCount);
+}
 
 long Word::GetWordRepresentation() { return WordRepresentation; }
 
@@ -33,12 +38,14 @@ string Word::SortWord(Word& word)
 {
 	if (word.KeySet) return word.WordKey;
 
-	vector<char> v(word.GetWordValue().begin(), word.GetWordValue().end());
+	auto wordValue = word.GetWordValue();
+	vector<char> v(wordValue.begin(), wordValue.end());
 
 	sort(v.begin(), v.end(), [](const char& c1, const char& c2) { return toupper(c1) < toupper(c2); });
 	string s(v.begin(), v.end());
 	word.WordKey = s;
 	word.KeySet = true;
+	return word.WordKey;
 }
 
 bool Word::IsWordSame(Word word1, Word word2)

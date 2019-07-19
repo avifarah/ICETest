@@ -16,8 +16,8 @@ using namespace std;
 class LETTERDLLEXPORT AnagramException
 {
 private:
-	string& Message;
-	string& Word;
+	string Message;
+	string Word;
 	int LineCount;
 	int WordCount;
 
