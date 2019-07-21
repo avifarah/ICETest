@@ -19,9 +19,9 @@ namespace AnagramCppTest
 			// Arrange
 			string lcw[] = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
 			string ucw[] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-			long lcRep[26];
-			long ucRep[26];
-			long expectedRep[] = { 207031882L/*a*/,  129113432L/*b*/,  147952881L/*c*/, 1198613964L/*d*/, 900798196L/*e*/,
+			long long lcRep[26];
+			long long ucRep[26];
+			long long expectedRep[] = { 207031882L/*a*/,  129113432L/*b*/,  147952881L/*c*/, 1198613964L/*d*/, 900798196L/*e*/,
 				 641766006L/*f*/, 1294752809L/*g*/, 1143038047L/*h*/, 2080082395L/*i*/,  599264335L/*j*/,
 				2144146621L/*k*/, 2081532791L/*l*/, 1047676367L/*m*/, 1230385815L/*n*/,  752418720L/*o*/,
 				1137908481L/*p*/, 1638155167L/*q*/, 1300586832L/*r*/, 2106012734L/*s*/, 1687192378L/*t*/,
@@ -50,14 +50,14 @@ namespace AnagramCppTest
 			// Arrange
 			string lcw[] = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
 			string ucw[] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-			long lcRep[26];
-			long ucRep[26];
+			long long lcRep[26];
+			long long ucRep[26];
 
-			map<char, long> rep;
+			map<char, long long> rep;
 			for (auto i = 0; i < 26; ++i)
 			{
-				rep.insert(pair<char, long>((char)((int)('a' + i)), i));
-				rep.insert(pair<char, long>((char)((int)('A' + i)), i));
+				rep.insert(pair<char, long long>((char)((int)('a' + i)), i));
+				rep.insert(pair<char, long long>((char)((int)('A' + i)), i));
 			}
 			LetterRepresentation lettRep(rep);
 
@@ -72,7 +72,7 @@ namespace AnagramCppTest
 			for (auto i = 0; i < 26; ++i)
 			{
 				Assert::AreEqual(lcRep[i], ucRep[i]);
-				Assert::AreEqual((long)i, lcRep[i]);
+				Assert::AreEqual((long long)i, lcRep[i]);
 			}
 		}
 
@@ -80,7 +80,8 @@ namespace AnagramCppTest
 		{
 			// Arrange
 			string word = "abcxyz";
-			auto expectedWordRep = 207031882L/*a*/ + 129113432L/*b*/ + 147952881L/*c*/ + 425306638L/*x*/ + 1150261808L/*y*/ + 2051875233L/*z*/;
+			long long expectedWordRep = (long long)207031882L/*a*/ + (long long)129113432L/*b*/ + (long long)147952881L/*c*/ + (long long)425306638L/*x*/ +
+				(long long)1150261808L + (long long)2051875233L/*z*/;
 			LetterRepresentation rep;
 
 			// Act
@@ -94,14 +95,14 @@ namespace AnagramCppTest
 		{
 			// Arrange
 			string word = "abcxyz";
-			auto expectedWordRep = 0L/*a*/ + ((long)'b' - (long)'a')/*b*/ + ((long)'c' - (long)'a')/*c*/ + 
-				((long)'x' - (long)'a')/*x*/ + ((long)'y' - (long)'a')/*y*/ + ((long)'z' - (long)'a')/*z*/;
+			auto expectedWordRep = 0L/*a*/ + ((long long)'b' - (long long)'a')/*b*/ + ((long long)'c' - (long long)'a')/*c*/ +
+				((long long)'x' - (long long)'a')/*x*/ + ((long long)'y' - (long long)'a')/*y*/ + ((long long)'z' - (long long)'a')/*z*/;
 
-			map<char, long> rep;
+			map<char, long long> rep;
 			for (auto i = 0; i < 26; ++i)
 			{
-				rep.insert(pair<char, long>((char)((int)('a' + i)), i));
-				rep.insert(pair<char, long>((char)((int)('A' + i)), i));
+				rep.insert(pair<char, long long>((char)((int)('a' + i)), i));
+				rep.insert(pair<char, long long>((char)((int)('A' + i)), i));
 			}
 			LetterRepresentation letterRep(rep);
 

@@ -53,6 +53,17 @@ namespace AnagramMain
 
 		/// <summary>
 		/// This method, ExtractAnagrams(..), is supposed to follow the GetAllWords().
+		/// Algorithm:
+		///		*	Create anagramLists a List<list<Word>>
+		///		*	cycle through all the words in wordDic
+		///		*		each iteration through the dictionary deals with an item having the same Anagram Key
+		///				(2 words with the same anagram key does not guarantee that the 2 words are anagramatic, they
+		///				may be the same or they may be non anagramatic.  However, words having different anagramatic key
+		///				are necessarily not anagrams.)
+		///				During each iteration we build the anagramLists as follows
+		///		*			if the word is part of any of the lists in the anagramLists then we do nothing
+		///					else if it is anagramit to any of the lists in the anagramLists then it is added to that list
+		///					else it is the beginning of a new list
 		/// </summary>
 		/// <param name="wordDic"></param>
 		/// <returns></returns>

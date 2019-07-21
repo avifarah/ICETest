@@ -7,7 +7,7 @@
 
 using namespace std;
 
-static map<char, long> DefaultLetterRep = map<char, long>{
+static map<char, long long> DefaultLetterRep = map<char, long long>{
 	{ 'a',  207031882L }, { 'A',  207031882L },
 	{ 'b',  129113432L }, { 'B',  129113432L },
 	{ 'c',  147952881L }, { 'C',  147952881L },
@@ -40,7 +40,7 @@ LetterRepresentation::LetterRepresentation() : LetterRep(DefaultLetterRep)
 {
 }
 
-LetterRepresentation::LetterRepresentation(map<char, long> dic) : LetterRep(dic)
+LetterRepresentation::LetterRepresentation(map<char, long long> dic) : LetterRep(dic)
 {
 }
 
@@ -48,13 +48,12 @@ LetterRepresentation::~LetterRepresentation()
 {
 }
 
-//long WordRep(string word, int lineCount = 0, int wordCount = 0)
-long LetterRepresentation::WordRep(string word, int lineCount /*= 0*/, int wordCount /*= 0*/)
+long long LetterRepresentation::WordRep(string word, int lineCount /*= 0*/, int wordCount /*= 0*/)
 {
-	long wordRep = 0L;
+	long long wordRep = 0L;
 	for (auto letter : word)
 	{
-		map<char, long>::iterator wordRepIter = LetterRep.find(letter);
+		map<char, long long>::iterator wordRepIter = LetterRep.find(letter);
 
 		if (wordRepIter == LetterRep.end())
 		{

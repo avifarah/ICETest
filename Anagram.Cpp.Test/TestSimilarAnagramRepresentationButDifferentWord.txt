@@ -1,0 +1,9 @@
+adegh, degha, hgeda, gehda,
+ADEGH, DEGHA, HGEDA, GEHDA,
+bcegh, eghbc, hgecb, ghebc,
+adffh, dffha, ffhad, fhadf
+ADEGH
+DEGHA
+HGEDA
+GEHDA
+

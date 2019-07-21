@@ -33,8 +33,8 @@ public:
 	AnagramParser(ifstream& textStream, LetterRepresentation rep);
 	~AnagramParser();
 
-	map<long, vector<Word>> GetAllWords();
-	vector<vector<Word>> ExtractPotentialAnagrams(map<long, vector<Word>> wordDic);
+	map<long long, vector<Word>> GetAllWords();
+	vector<vector<Word>> ExtractPotentialAnagrams(map<long long, vector<Word>> wordDic);
 	vector<vector<string>> GetAnagrams();
 };
 

@@ -17,11 +17,11 @@ using namespace std;
 class LETTEREXPORT LetterRepresentation
 {
 private:
-	map<char, long> LetterRep;
+	map<char, long long> LetterRep;
 
 public:
 	LetterRepresentation();
-	LetterRepresentation(map<char, long> dic);
+	LetterRepresentation(map<char, long long> dic);
 	~LetterRepresentation();
-	long WordRep(string word, int lineCount = 0, int wordCount = 0);
+	long long WordRep(string word, int lineCount = 0, int wordCount = 0);
 };

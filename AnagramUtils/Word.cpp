@@ -20,19 +20,15 @@ Word::~Word()
 {
 }
 
-string Word::GetWordValue() { return WordValue; }
+string Word::GetWordValue() const { return WordValue; }
 
-string Word::GetWordKey()
+string Word::GetWordKey() const
 {
 	if (KeySet) return WordKey;
 	throw AnagramException("WordKey was not set", WordValue, LineCount, WordCount);
 }
 
-long Word::GetWordRepresentation() { return WordRepresentation; }
-
-bool Word::operator ==(Word& rhs) const { return (WordValue == rhs.GetWordValue()); }
-
-bool Word::operator !=(Word& rhs) const { return !(*this == rhs); }
+long long Word::GetWordRepresentation() const { return WordRepresentation; }
 
 string Word::SortWord(Word& word)
 {
@@ -48,10 +44,7 @@ string Word::SortWord(Word& word)
 	return word.WordKey;
 }
 
-bool Word::IsWordSame(Word word1, Word word2)
-{
-	return Utils::IsStringSame(word1.GetWordValue(), word2.GetWordValue());
-}
+bool Word::IsWordSame(Word word1, Word word2) { return Utils::IsStringSame(word1.GetWordValue(), word2.GetWordValue()); }
 
 Word::WordAnagram Word::IsWordAnagram(Word& word1, Word& word2)
 {
@@ -59,10 +52,17 @@ Word::WordAnagram Word::IsWordAnagram(Word& word1, Word& word2)
 	if (word1.GetWordValue().size() != word2.GetWordValue().size())
 		return NotAnagram;
 
-	SortWord(word2);
-	SortWord(word1);
+	if (!word2.KeySet) SortWord(word2);
+	if (!word1.KeySet) SortWord(word1);
+
+	if (word1.GetWordRepresentation() != word2.GetWordRepresentation())
+		return NotAnagram;
+
 	if (Utils::IsStringSame(word1.GetWordKey(), word2.GetWordKey()))
 		return YesAnagram;
 
 	return NotAnagram;
 }
+
+bool Word::operator ==(const Word& rhs) { return (GetWordValue() == rhs.GetWordValue()); }
+bool Word::operator !=(const Word& rhs) { return !(*this == rhs); }

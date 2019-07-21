@@ -2,6 +2,7 @@
 #include <regex>
 #include <map>
 #include "AnagramParser.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -20,9 +21,9 @@ AnagramParser::~AnagramParser()
 {
 }
 
-map<long, vector<Word>> AnagramParser::GetAllWords()
+map<long long, vector<Word>> AnagramParser::GetAllWords()
 {
-	map<long, vector<Word>> wordDic;
+	map<long long, vector<Word>> wordDic;
 	for (auto lc = 1; !TextStream.eof(); ++lc)
 	{
 		string line;
@@ -37,14 +38,14 @@ map<long, vector<Word>> AnagramParser::GetAllWords()
 			smatch match = *currentMatch;
 			auto word = Word(Rep, match.str(), lc, wc);
 			auto rep = word.GetWordRepresentation();
-			map<long, vector<Word>>::iterator wordDicIt = wordDic.find(rep);
+			map<long long, vector<Word>>::iterator wordDicIt = wordDic.find(rep);
 			if (wordDicIt != wordDic.end())
 				wordDicIt->second.push_back(word);
 			else
 			{
 				vector<Word> vecOfWord;
 				vecOfWord.push_back(word);
-				wordDic.insert(pair<long, vector<Word>>(rep, vecOfWord));
+				wordDic.insert(pair<long long, vector<Word>>(rep, vecOfWord));
 			}
 
 			++currentMatch;
@@ -54,21 +55,33 @@ map<long, vector<Word>> AnagramParser::GetAllWords()
 	return wordDic;
 }
 
-vector<vector<Word>> AnagramParser::ExtractPotentialAnagrams(map<long, vector<Word>> wordDic)
+// This method, ExtractAnagrams(..), is supposed to follow the GetAllWords().
+// Algorithm:
+//		*	Create anagramLists a vector<vector<Word>>
+//		*	cycle through all the words in wordDic
+//		*		each iteration through the dictionary deals with an item having the same Anagram Key
+//				(2 words with the same anagram key does not guarantee that the 2 words are anagramatic, they
+//				may be the same or they may be non anagramatic.  However, words having different anagramatic key
+//				are necessarily not anagrams.)
+//				During each iteration we build the anagramLists as follows
+//		*			if the word is part of any of the lists in the anagramLists then we do nothing
+//					else if it is anagramit to any of the lists in the anagramLists then it is added to that list
+//					else it is the beginning of a new list
+vector<vector<Word>> AnagramParser::ExtractPotentialAnagrams(map<long long, vector<Word>> wordDic)
 {
+	// All words will be divvied up by their anagramatic indicator into these lists
 	vector<vector<Word>> anagramLists;
 
+	// Go through all input words 
 	for (auto item : wordDic)
 	{
 		// If the word is a single word for the numeric representation then continue;
 		if (item.second.size() == 1) continue;
 
 		// In order to start the Anagram list take out the first word and match the rest of the words to it
-		vector<Word> vecWord;
-		vecWord.push_back(item.second[0]);
-		auto firstWordList = vecWord;
+		vector<Word> firstWordList { item.second[0] };
 
-		// Add this list to the localAnagramList
+		// Add this list to the breakdown of the lists of anagrams
 		anagramLists.push_back(firstWordList);
 
 		// Cycle through all words in restOfWords
@@ -77,13 +90,15 @@ vector<vector<Word>> AnagramParser::ExtractPotentialAnagrams(map<long, vector<Wo
 		auto wc = 1;
 		for ( ; restOfWordsIt != item.second.end(); ++restOfWordsIt, ++wc)
 		{
+			auto currentRestWord = *restOfWordsIt;
+
 			// Cycle through all list of potential anagrams
 			auto wordCounted = false;
 			auto alc = 0;
 			for (auto localAnagramIt = anagramLists.begin(); localAnagramIt != anagramLists.end(); ++localAnagramIt, ++alc)
 			{
 				auto f = (*localAnagramIt)[0];
-				auto isAnagram = Word::IsWordAnagram(f, *restOfWordsIt);
+				auto isAnagram = Word::IsWordAnagram(f, currentRestWord);
 				if (isAnagram == Word::SameWord)
 				{
 					wordCounted = true;
@@ -93,29 +108,19 @@ vector<vector<Word>> AnagramParser::ExtractPotentialAnagrams(map<long, vector<Wo
 				if (isAnagram == Word::YesAnagram)
 				{
 					// First make sure that it is not the same as any word in the list
-					auto rcItr = find_if(localAnagramIt->begin(), localAnagramIt->end(),
-						[&](auto& s) {
-							if (s.GetWordValue().size() != (*restOfWordsIt).GetWordValue().size()) return false;
-							for (size_t i = 0; i < s.GetWordValue().size(); ++i)
-								if (::tolower(s.GetWordValue()[i]) == ::tolower((*restOfWordsIt).GetWordValue()[i])) return true;
-							return false;
-						}
-					);
-					if (rcItr != localAnagramIt->end())
-						(*localAnagramIt).push_back(*restOfWordsIt);
+					auto rcItr = find_if(localAnagramIt->begin(), localAnagramIt->end(), [&](auto s) { return Utils::IsStringSame(s.GetWordValue(), currentRestWord.GetWordValue()); });
+					if (rcItr == localAnagramIt->end())
+						localAnagramIt->push_back(*restOfWordsIt);
 
 					wordCounted = true;
 					break;
 				}
 			}
 
+			// No List found containing the word, *restOfWordsIt, nor any word in the lists an anagram to the word, *restOfWordsIt, 
+			// then add the word, *restOfWordsIt, to a new list
 			if (!wordCounted)
-			{
-				// No List found and word is not used add a new list
-				vector<Word> rest;
-				rest.push_back(*restOfWordsIt);
-				anagramLists.push_back(rest);
-			}
+				anagramLists.push_back(vector<Word> { *restOfWordsIt });
 		}
 	}
 

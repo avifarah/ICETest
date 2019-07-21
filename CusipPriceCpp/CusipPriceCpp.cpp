@@ -16,7 +16,6 @@ int main()
 {
 	try
 	{
-		//ifstream ifs("G:\\Dev\\ICE.Core\\CusipPriceTest\\CusipPrice-1.txt");
 		ifstream ifs("CusipPrice1-Good.txt");
 		auto cp = CusipProcessor(ifs);
 		auto cusip = cp.ReadCusip();

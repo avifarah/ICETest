@@ -63,9 +63,11 @@ namespace AnagramMain
 			if (IsWordSame(word1, word2)) return WordAnagram.SameWord;
 			if (word1.WordValue.Length != word2.WordValue.Length) return WordAnagram.NotAnagram;
 
-			SortWord(ref word2);
-			SortWord(ref word1);
-			if (string.Compare(word1.WordKey, word2.WordKey, StringComparison.CurrentCultureIgnoreCase) == 0) return WordAnagram.YesAnagram;
+			if (!word2.KeySet) SortWord(ref word2);
+			if (!word1.KeySet) SortWord(ref word1);
+
+			if (string.Compare(word1.WordKey, word2.WordKey, StringComparison.CurrentCultureIgnoreCase) == 0)
+				return WordAnagram.YesAnagram;
 
 			return WordAnagram.NotAnagram;
 		}

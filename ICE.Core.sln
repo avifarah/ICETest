@@ -35,6 +35,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnagramUtils", "AnagramUtil
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Anagram.Cpp.Test", "Anagram.Cpp.Test\Anagram.Cpp.Test.vcxproj", "{A98F679E-EC37-4423-AA41-29C738FC93D6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnagramCpp.Main", "AnagramCpp.Main\AnagramCpp.Main.vcxproj", "{5514396C-9895-448F-A8DC-2D38C2803903}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,17 @@ Global
 		{A98F679E-EC37-4423-AA41-29C738FC93D6}.Release|x64.Build.0 = Release|x64
 		{A98F679E-EC37-4423-AA41-29C738FC93D6}.Release|x86.ActiveCfg = Release|Win32
 		{A98F679E-EC37-4423-AA41-29C738FC93D6}.Release|x86.Build.0 = Release|Win32
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Debug|Any CPU.Build.0 = Debug|Win32
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Debug|x64.ActiveCfg = Debug|x64
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Debug|x64.Build.0 = Debug|x64
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Debug|x86.ActiveCfg = Debug|Win32
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Debug|x86.Build.0 = Debug|Win32
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Release|Any CPU.ActiveCfg = Release|Win32
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Release|x64.ActiveCfg = Release|x64
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Release|x64.Build.0 = Release|x64
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Release|x86.ActiveCfg = Release|Win32
+		{5514396C-9895-448F-A8DC-2D38C2803903}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -200,6 +213,7 @@ Global
 		{9DF351FA-2F98-478B-853B-1644382BF6A7} = {D28A859F-14A3-40A4-92A6-99C4859B9D12}
 		{9EEDF084-FBE4-4412-9711-73C40782C2F4} = {D723C88D-A461-4103-8DC7-1CB82D358874}
 		{A98F679E-EC37-4423-AA41-29C738FC93D6} = {D723C88D-A461-4103-8DC7-1CB82D358874}
+		{5514396C-9895-448F-A8DC-2D38C2803903} = {D723C88D-A461-4103-8DC7-1CB82D358874}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {676990E9-9823-4C62-B7F9-91C07E9258C1}
