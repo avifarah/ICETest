@@ -6,22 +6,23 @@ namespace Anagram.Test
 	public class WordTest
 	{
 		[Fact]
-		public void Sort_Success()
+		public void SetWordKey_Success()
 		{
 			// Arrange
 			var rep = LetterRepresentation.Inst.CreateRep();
 			var word = new Word(rep, "Cba");
-			var expected = "abC";
+			var expectedKey = "abC";
 
 			// Act
-			var actual = Word.SortWord(ref word);
+			var actualKey = Word.SetWordKey(ref word);
 
 			// Assert
-			Assert.Equal(expected, actual);
+			Assert.Equal(expectedKey, actualKey);
+			Assert.Equal(expectedKey, word.WordKey);
 		}
 
 		[Fact]
-		public void Equal_WordsBeforeSort_success()
+		public void Equal_WordsBeforeSetWordKey_success()
 		{
 			// Arrange
 			var rep = LetterRepresentation.Inst.CreateRep();
@@ -36,7 +37,7 @@ namespace Anagram.Test
 		}
 
 		[Fact]
-		public void Equal_WordsBeforeSort_Failure()
+		public void Equal_WordsBeforeSetWordKey_Failure()
 		{
 			// Arrange
 			var rep = LetterRepresentation.Inst.CreateRep();
@@ -51,14 +52,14 @@ namespace Anagram.Test
 		}
 
 		[Fact]
-		public void Equal_WordsAfterSort_success()
+		public void Equal_WordsAfterSetWordKey_success()
 		{
 			// Arrange
 			var rep = LetterRepresentation.Inst.CreateRep();
 			var word1 = new Word(rep, "Abcdef");
 			var word2 = new Word(rep, "Abcdef");
-			Word.SortWord(ref word1);           // Make sure word1 is sortd
-			Word.SortWord(ref word2);			// Make sure word2 is sorted
+			Word.SetWordKey(ref word1);
+			Word.SetWordKey(ref word2);
 
 			// Act
 			var isSame = word1.Equals(word2);
@@ -70,14 +71,14 @@ namespace Anagram.Test
 		}
 
 		[Fact]
-		public void Equal_WordsAfterSort_Failure()
+		public void Equal_WordsAfterSetWordKey_Failure()
 		{
 			// Arrange
 			var rep = LetterRepresentation.Inst.CreateRep();
 			var word1 = new Word(rep, "Abcdef");
 			var word2 = new Word(rep, "abcdef");
-			Word.SortWord(ref word1);           // Make sure word1 is sortd
-			Word.SortWord(ref word2);           // Make sure word2 is sorted
+			Word.SetWordKey(ref word1);
+			Word.SetWordKey(ref word2);
 
 			// Act
 			var isSame = word1.Equals(word2);
@@ -112,12 +113,13 @@ namespace Anagram.Test
 			var word2 = new Word(rep, "Bcdefa");
 			var expectedKey1 = "abcdeF";
 			var expectedKey2 = "aBcdef";
+			var expectedIsAnagram = Word.WordAnagram.YesAnagram;
 
 			// Act
 			var isAnagram = Word.IsWordAnagram(ref word1, ref word2);
 
 			// Assert
-			Assert.Equal(Word.WordAnagram.YesAnagram, isAnagram);
+			Assert.Equal(expectedIsAnagram, isAnagram);
 			Assert.Equal(expectedKey1, word1.WordKey);
 			Assert.Equal(expectedKey2, word2.WordKey);
 		}
@@ -129,12 +131,13 @@ namespace Anagram.Test
 			var rep = LetterRepresentation.Inst.CreateRep();
 			var word1 = new Word(rep, "Abcdef");
 			var word2 = new Word(rep, "Bcdefg");
+			var expectedIsAnagram = Word.WordAnagram.NotAnagram;
 
 			// Act
 			var isAnagram = Word.IsWordAnagram(ref word1, ref word2);
 
 			// Assert
-			Assert.Equal(Word.WordAnagram.NotAnagram, isAnagram);
+			Assert.Equal(expectedIsAnagram, isAnagram);
 		}
 
 		[Fact]
@@ -144,12 +147,13 @@ namespace Anagram.Test
 			var rep = LetterRepresentation.Inst.CreateRep();
 			var word1 = new Word(rep, "Abcdef");
 			var word2 = new Word(rep, "Bcdefgh");
+			var expectedIsAnagram = Word.WordAnagram.NotAnagram;
 
 			// Act
 			var isAnagram = Word.IsWordAnagram(ref word1, ref word2);
 
 			// Assert
-			Assert.Equal(Word.WordAnagram.NotAnagram, isAnagram);
+			Assert.Equal(expectedIsAnagram, isAnagram);
 		}
 
 		[Fact]
@@ -159,12 +163,13 @@ namespace Anagram.Test
 			var rep = LetterRepresentation.Inst.CreateRep();
 			var word1 = new Word(rep, "Abcdef");
 			var word2 = new Word(rep, "ABCDEF");
+			var expectedIsAnagram = Word.WordAnagram.SameWord;
 
 			// Act
 			var isAnagram = Word.IsWordAnagram(ref word1, ref word2);
 
 			// Assert
-			Assert.Equal(Word.WordAnagram.SameWord, isAnagram);
+			Assert.Equal(expectedIsAnagram, isAnagram);
 		}
 	}
 }

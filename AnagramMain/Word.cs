@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AnagramMain
@@ -35,13 +34,19 @@ namespace AnagramMain
 			WordCount = wordCount;
 		}
 
+		/// <summary>
+		/// Either case sensitive equality or case insensitive equality is needed for Word copmarison.
+		/// I choose case sensitive because I feel that this would be the consumer of the class' expectation.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
 		public bool Equals(Word other) => WordValue == other.WordValue;
 
 		public override int GetHashCode() => WordValue.GetHashCode();
 
 		#region AnagramHelper
 
-		public static string SortWord(ref Word word)
+		public static string SetWordKey(ref Word word)
 		{
 			if (word.KeySet) return word.WordKey;
 
@@ -54,6 +59,12 @@ namespace AnagramMain
 
 		/// <summary>
 		/// Is Word an Anagram
+		/// 
+		/// <remark>
+		/// Anagramic words necessarily have the same word representation
+		/// Same word representation do not necesitate anagramic words.  The ultimate test of if words are
+		/// an anagram is the fact that their word key are the same.
+		/// </remark> 
 		/// </summary>
 		/// <param name="word1"></param>
 		/// <param name="word2"></param>
@@ -62,13 +73,12 @@ namespace AnagramMain
 		{
 			if (IsWordSame(word1, word2)) return WordAnagram.SameWord;
 			if (word1.WordValue.Length != word2.WordValue.Length) return WordAnagram.NotAnagram;
+			if (word1.WordRepresentation != word2.WordRepresentation) return WordAnagram.NotAnagram;
 
-			if (!word2.KeySet) SortWord(ref word2);
-			if (!word1.KeySet) SortWord(ref word1);
+			if (!word2.KeySet) SetWordKey(ref word2);
+			if (!word1.KeySet) SetWordKey(ref word1);
 
-			if (string.Compare(word1.WordKey, word2.WordKey, StringComparison.CurrentCultureIgnoreCase) == 0)
-				return WordAnagram.YesAnagram;
-
+			if (string.Compare(word1.WordKey, word2.WordKey, StringComparison.CurrentCultureIgnoreCase) == 0) return WordAnagram.YesAnagram;
 			return WordAnagram.NotAnagram;
 		}
 

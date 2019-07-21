@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
 
@@ -25,7 +24,8 @@ namespace AnagramMain
 
 		/// <summary>
 		/// Extracts all words from a stream (document) and stuff them into
-		/// a construct allowing for further processing
+		/// a dictionary construct, keyed off the word representation, allowing
+		/// for further processing.
 		/// </summary>
 		/// <returns></returns>
 		public Dictionary<long, List<Word>> GetAllWords()

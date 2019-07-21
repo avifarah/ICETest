@@ -29,7 +29,7 @@ bool Word::operator ==(Word& rhs) const { return (WordValue == rhs.GetWordValue(
 
 bool Word::operator !=(Word& rhs) const { return !(*this == rhs); }
 
-string Word::SortWord(Word& word)
+string Word::SetWordKey(Word& word)
 {
 	if (word.KeySet) return word.WordKey;
 
@@ -49,13 +49,12 @@ bool Word::IsWordSame(Word word1, Word word2)
 Word::WordAnagram Word::IsWordAnagram(Word& word1, Word& word2)
 {
 	if (IsWordSame(word1, word2)) return SameWord;
-	if (word1.GetWordValue().size() != word2.GetWordValue().size())
-		return NotAnagram;
+	if (word1.GetWordValue().size() != word2.GetWordValue().size()) return NotAnagram;
+	if (word1.WordRepresentation != word2.WordRepresentation) return NotAnagram;
 
-	SortWord(word2);
-	SortWord(word1);
-	if (Utils::IsStringSame(word1.GetWordKey(), word2.GetWordKey()))
-		return YesAnagram;
+	if (!word2.KeySet) SetWordKey(word2);
+	if (!word1.KeySet) SetWordKey(word1);
 
+	if (Utils::IsStringSame(word1.GetWordKey(), word2.GetWordKey())) return YesAnagram;
 	return NotAnagram;
 }

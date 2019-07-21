@@ -19,14 +19,14 @@ namespace AnagramCppTest
 			// Arrange
 			LetterRepresentation rep;
 			string wStr = "WordTest";
-			long long wordRepresentation = (long long)755811883L/*W*/ + (long long)752418720L/*o*/ + (long long)1300586832L/*r*/ +
+			long long expWordRepresentation = (long long)755811883L/*W*/ + (long long)752418720L/*o*/ + (long long)1300586832L/*r*/ +
 				(long long)1198613964L/*d*/ + (long long)1687192378L/*T*/ + (long long)900798196L/*e*/ + (long long)2106012734L/*s*/ + (long long)1687192378L/*t*/;
 
 			// Act
 			auto word = Word(rep, wStr);
 
 			// Assert
-			Assert::AreEqual(wordRepresentation, word.GetWordRepresentation());
+			Assert::AreEqual(expWordRepresentation, word.GetWordRepresentation());
 		}
 
 		TEST_METHOD(TestWord_WordValue)
@@ -73,7 +73,7 @@ namespace AnagramCppTest
 			string expectedValue1 = "deorsTtW";
 			string expectedValue2 = "deorstTW";
 			auto word = Word(rep, wStr);
-			auto retWordKey = Word::SortWord(word);
+			auto retWordKey = Word::SetWordKey(word);
 
 			// Act
 			auto wordKey = word.GetWordKey();

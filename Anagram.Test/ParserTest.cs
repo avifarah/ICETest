@@ -98,6 +98,7 @@ cab"" jkl 123 mno555";
 bca; def- ghi'
 cab"" jkl 123 mno555";
 			var rep = LetterRepresentation.Inst.CreateRep();
+			var expectedanagramCount484098195 = 4;
 
 			//var expectedWords = new List<(long, Word)> {
 			//	( 207031882L/*a*/+  129113432L/*b*/ +  147952881L/*c*/, new Word(rep, "Abc")),	//  484098195, Abc	// Anagram count = 1
@@ -120,7 +121,7 @@ cab"" jkl 123 mno555";
 				var dicWords = parser.GetAllWords();
 
 				// Assert
-				Assert.Equal(4, dicWords[484098195L].Count);
+				Assert.Equal(expectedanagramCount484098195, dicWords[484098195L].Count);
 				Assert.Single(dicWords[2741178166L]);
 				Assert.Single(dicWords[4517873251L]);
 				Assert.Single(dicWords[4824943747L]);
@@ -138,7 +139,7 @@ cab"" jkl 123 mno555";
 			// that are not anagrams.  With our random number generated representative it will be difficult to get to same
 			// numeric word representation but not anagrams.
 			var dic = new Dictionary<char, long>();
-			Enumerable.Range(0, 26).ToList().ForEach(i => { dic.Add((char)('A' + i), (long)i); dic.Add((char)('a' + i), i); });
+			Enumerable.Range(0, 'z' - 'a' + 1).ToList().ForEach(i => { dic.Add((char)('A' + i), i); dic.Add((char)('a' + i), i); });
 			var repSimple = LetterRepresentation.Inst.CreateRep(dic);
 
 			// The representation of all these words is 20
@@ -167,12 +168,17 @@ ADEGH DEGHA HGEDA GEHDA ";
 			var word33 = new Word(repSimple, "fhadf");      // Anagram 3, count 4
 
 			var wordDic = new Dictionary<long, List<Word>> {
-				{ 20, new List<Word> { word10, word11, word12, word13, word14, word15, word16, word17,   word20, word21, word22, word23,   word30, word31, word32, word33 } }
+				{ 20, new List<Word> { word10, word11, word12, word13, word14, word15, word16, word17,
+					word20, word21, word22, word23,
+					word30, word31, word32, word33 }
+				}
 			};
 
 			var expectedAnagram1 = new List<Word> { word10, word11, word12, word13 };
 			var expectedAnagram2 = new List<Word> { word20, word21, word22, word23 };
 			var expectedAnagram3 = new List<Word> { word30, word31, word32, word33 };
+			var expectedAnagramGroups = 3;
+			var expectedAnagramsInEachGroup = 4;
 
 			// Act
 			var byteArray = Encoding.UTF8.GetBytes(text);
@@ -185,9 +191,9 @@ ADEGH DEGHA HGEDA GEHDA ";
 				var anagramLists = parser.GetAnagrams();
 
 				// Assert
-				Assert.Equal(3, anagramLists.Count);
-				for (var i = 0; i < 3; ++i)
-					Assert.Equal(4, anagramLists[i].Count);
+				Assert.Equal(expectedAnagramGroups, anagramLists.Count);
+				for (var i = 0; i < expectedAnagramGroups; ++i)
+					Assert.Equal(expectedAnagramsInEachGroup, anagramLists[i].Count);
 			}
 		}
 	}

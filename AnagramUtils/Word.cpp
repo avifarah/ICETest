@@ -30,7 +30,7 @@ string Word::GetWordKey() const
 
 long long Word::GetWordRepresentation() const { return WordRepresentation; }
 
-string Word::SortWord(Word& word)
+string Word::SetWordKey(Word& word)
 {
 	if (word.KeySet) return word.WordKey;
 
@@ -52,8 +52,8 @@ Word::WordAnagram Word::IsWordAnagram(Word& word1, Word& word2)
 	if (word1.GetWordValue().size() != word2.GetWordValue().size())
 		return NotAnagram;
 
-	if (!word2.KeySet) SortWord(word2);
-	if (!word1.KeySet) SortWord(word1);
+	if (!word2.KeySet) SetWordKey(word2);
+	if (!word1.KeySet) SetWordKey(word1);
 
 	if (word1.GetWordRepresentation() != word2.GetWordRepresentation())
 		return NotAnagram;

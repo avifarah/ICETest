@@ -21,12 +21,29 @@ namespace AnagramMain
 
 			#region ILetterRepresentation
 
+			/// <summary>
+			/// Word representation is the arithmatic summation of the letter representation.
+			/// We are not afraid of an overflow becase we assume "normal" letter count in a word, less than,
+			/// say 1,000.  
+			/// 
+			/// <remark>
+			/// Anagram words necessarily have the same representation.
+			/// The same representation does not necessarily mean that the words are anagrams and as such
+			/// further investigation is warranted.  A definitive test (as per the class word) is when
+			/// their WordKey are equal.
+			/// </remark>
+			/// </summary>
+			/// <param name="word"></param>
+			/// <param name="lineCount"></param>
+			/// <param name="wordCount"></param>
+			/// <returns></returns>
 			public long WordRep(string word, int lineCount = 0, int wordCount = 0)
 			{
 				long wordRep = 0L;
 				foreach (var letter in word)
 				{
-					if (!_letterRep.ContainsKey(letter)) throw new AnagramException($"Letter {letter} is not a word letter", word, lineCount, wordCount);
+					if (!_letterRep.ContainsKey(letter))
+						throw new AnagramException($"Letter {letter} is not a word letter", word, lineCount, wordCount);
 					wordRep += _letterRep[letter];
 				}
 

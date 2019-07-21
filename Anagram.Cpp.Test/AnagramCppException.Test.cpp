@@ -10,7 +10,7 @@ namespace AnagramCppTest
 	{
 	public:
 
-		TEST_METHOD(TestException_1)
+		TEST_METHOD(TestException_NoLinecountNoWordcount)
 		{
 			// Arrange
 			string expectedMessage = "Test Anagram Exception";
@@ -33,7 +33,7 @@ namespace AnagramCppTest
 			}
 		}
 
-		TEST_METHOD(TestException_2)
+		TEST_METHOD(TestException_WithLineCountNoWordcount)
 		{
 			// Arrange
 			string expectedMessage = "Test Anagram Exception";
@@ -56,7 +56,7 @@ namespace AnagramCppTest
 			}
 		}
 
-		TEST_METHOD(TestException_3)
+		TEST_METHOD(TestException_WithLinecountAndLettercount)
 		{
 			// Arrange
 			string expectedMessage = "Test Anagram Exception";
