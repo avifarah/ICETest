@@ -30,7 +30,7 @@
     <ClCompile Include="AnagramCppException.Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnagramCppParserTest.cpp">
+    <ClCompile Include="AnagramCppParser.Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

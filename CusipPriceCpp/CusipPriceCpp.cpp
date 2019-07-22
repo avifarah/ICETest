@@ -8,7 +8,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include "..\\CusipPriceProcessorCpp\CusipProcessor.h"
-#include "FeedExceptionCpp.h"
+#include "..\\UtilsCpp\FeedExceptionCpp.h"
 
 using namespace std;
 
@@ -29,7 +29,7 @@ int main()
 	}
 	catch (FeedExceptionCpp& ex)
 	{
-		cout << "Exception caught: " << ex.Message << ".  At line: " << ex.CurrentLineCountOfException << endl;
+		cout << "Exception caught: " << ex.GetExMessage() << ".  At line: " << ex.GetCurrentLineCountOfException() << endl;
 	}
 
 	cout << endl << endl;

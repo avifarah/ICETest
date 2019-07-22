@@ -160,6 +160,9 @@
     <ProjectReference Include="..\CusipPriceProcessorCpp\CusipPriceProcessorCpp.vcxproj">
       <Project>{8ffd6f5a-7c33-446c-b630-c61ace64330a}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\UtilsCpp\UtilsCpp.vcxproj">
+      <Project>{9df351fa-2f98-478b-853b-1644382bf6a7}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

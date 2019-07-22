@@ -160,7 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CusipLatestPriceTest.cpp" />
+    <ClCompile Include="CusipLatestPrice.Test.cpp" />
     <ClCompile Include="CusipPriceCpp.Test.cpp" />
     <ClCompile Include="FeedExceptoinCpp.Test.cpp" />
     <ClCompile Include="pch.cpp">

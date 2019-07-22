@@ -8,8 +8,8 @@
 
 using namespace std;
 
-static regex CusipReCusipProcessor = regex("^\\s*(\\w{8})\\s*$");
-static regex PriceReCusipProcessor = regex("^\\s*(\\d*\\.\\d+)\\s*$");
+static regex CusipReCusipProcessor("^\\s*(\\w{8})\\s*$");
+static regex PriceReCusipProcessor("^\\s*(\\d*\\.\\d+)\\s*$");
 static string emptyNextCusipCusipProcessor = string("");
 
 regex& CusipProcessor::cusipRe(CusipReCusipProcessor);
