@@ -15,11 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CusipPriceCpp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <Text Include="CusipPrice1-Good.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="CusipPrice1-Good.txt" />
+    <ClCompile Include="CusipPriceCpp.Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

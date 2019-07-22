@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CusipPriceCpp.cpp" />
+    <ClCompile Include="CusipPriceCpp.Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CusipPrice1-Good.txt" />

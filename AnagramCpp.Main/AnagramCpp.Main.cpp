@@ -26,7 +26,7 @@ int main()
 		cout << endl;
 	}
 
-    std::cout << "Done" << endl;
+    std::cout << endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
