@@ -21,10 +21,13 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UtilsTest.cpp">
+    <ClCompile Include="CusipLatestPriceTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CusipLatestPriceTest.cpp">
+    <ClCompile Include="FeedExceptoinCpp.Test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringExtCppTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

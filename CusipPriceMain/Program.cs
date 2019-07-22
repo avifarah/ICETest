@@ -43,6 +43,7 @@ namespace CusipPriceMain
 			Console.ReadKey();
 		}
 
-		private static void ProcCusipPriceHandler(object sender, CusipPriceEventArgs e) => Console.WriteLine($"Cusip: {e.Cusip}, price: {e.LatestPrice}");
+		private static void ProcCusipPriceHandler(object sender, CusipPriceEventArgs e)
+			=> Console.WriteLine($"Cusip: {e.Cusip}, price: {e.LatestPrice}");
 	}
 }

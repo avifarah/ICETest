@@ -9,7 +9,7 @@ namespace CusipPriceProcessor
 
 		public bool HasValue { get; }
 
-		public static CusipLatestPrice Null = new CusipLatestPrice(null);
+		public static readonly CusipLatestPrice Null = new CusipLatestPrice(null);
 
 		public CusipLatestPrice(string cusip, decimal price)
 		{

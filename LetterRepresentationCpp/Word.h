@@ -35,7 +35,7 @@ public:
 	bool operator ==(Word& rhs) const;
 	bool operator !=(Word& rhs) const;
 
-	string SetWordKey(Word& word);
+	string GetWordKey(Word& word);
 	bool IsWordSame(Word word1, Word word2);
 	WordAnagram IsWordAnagram(Word& word1, Word& word2);
 };

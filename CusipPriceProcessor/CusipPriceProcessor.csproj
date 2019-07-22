@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\LetterRepresentationCpp\Word.cpp" Link="Word.cpp" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Utils\Utils.csproj" />
   </ItemGroup>
 

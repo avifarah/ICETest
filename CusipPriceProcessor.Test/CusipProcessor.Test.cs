@@ -167,9 +167,9 @@ C2345678
 			{
 				var proc = new CusipProcessor(feedStream);
 				var cusip = proc.ReadCusip();
+				var cusipPrices = proc.ReadPricesForCusips(cusip);
 
 				// Act
-				var cusipPrices = proc.ReadPricesForCusips(cusip);
 				var ex = Assert.Throws<FeedException>(() => {
 					foreach (var clp in cusipPrices)
 						cusipPricesDic.Add(clp.Cusip, clp.Price);
@@ -198,18 +198,13 @@ A2345678
 			{
 				var proc = new CusipProcessor(feedStream);
 
-				try
-				{
-					// Act
-					var cusip = proc.ReadCusip();
-				}
-				catch (FeedException ex)
-				{
-					// Assert
-					Assert.Equal(expectedMsg, ex.Message);
-					Assert.Equal(expectedLineCount, ex.CurrentLineCountOfException);
-					Assert.True(string.IsNullOrEmpty(ex.LineOfException));
-				}
+				// Act
+				var ex = Assert.Throws<FeedException>(() => proc.ReadCusip());
+
+				// Assert
+				Assert.Equal(expectedMsg, ex.Message);
+				Assert.Equal(expectedLineCount, ex.CurrentLineCountOfException);
+				Assert.True(string.IsNullOrEmpty(ex.LineOfException));
 			}
 		}
 	}

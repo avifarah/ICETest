@@ -4,9 +4,9 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace utilsCppTest
+namespace StringExtCppTest
 {
-	TEST_CLASS(UtilsCppTest)
+	TEST_CLASS(StringExtCppTest)
 	{
 	public:
 

@@ -19,7 +19,6 @@ int main()
 		ifstream ifs("CusipPrice1-Good.txt");
 		auto cp = CusipProcessor(ifs);
 		auto cusip = cp.ReadCusip();
-		cout << cusip << endl;
 
 		while (true)
 		{
@@ -33,7 +32,7 @@ int main()
 		cout << "Exception caught: " << ex.Message << ".  At line: " << ex.CurrentLineCountOfException << endl;
 	}
 
-	cout << endl << "Done" << endl << endl;
+	cout << endl << endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

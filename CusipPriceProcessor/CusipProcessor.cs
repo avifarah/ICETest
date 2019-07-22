@@ -36,11 +36,11 @@ namespace CusipPriceProcessor
 		}
 
 		/// <summary>
-		/// At the beginning of this routine we are at the state where a Cusip was read
-		/// Therefore, the next state is either a Price, EOF or an Exception.
+		/// At the beginning of this routine we are at the state where a Cusip (at the beginning,
+		/// first cusip) was read.  Therefore, the next state is either a Price, EOF or an Exception.
 		/// 
 		/// This is a Left-to-Right parsing of the feed file, going through the file a line at a
-		/// time with a single line lookahead, LL(1).
+		/// time with a single line lookahead.
 		/// </summary>
 		/// <param name="cusip"></param>
 		/// <returns></returns>
@@ -69,9 +69,7 @@ namespace CusipPriceProcessor
 					}
 
 					++_currentLineCount;
-
-					// In the event that this statement throws an AggregateException then it will be caught by one of the calling routines
-					var line = Task.Run(_feedStream.ReadLineAsync).Result;
+					var line = _feedStream.ReadLine();
 
 					// It is acceptable for the last lines to be blank lines
 					if (string.IsNullOrEmpty(line))
@@ -117,7 +115,7 @@ namespace CusipPriceProcessor
 				var cusip = ReadCusip();
 				var cusipPrices = ReadPricesForCusips(cusip);
 				foreach (var clp in cusipPrices)
-					Raise(new CusipPriceEventArgs(clp.Cusip, clp.Price));
+					FireEvent(new CusipPriceEventArgs(clp.Cusip, clp.Price));
 
 				return true;
 			});
@@ -125,6 +123,6 @@ namespace CusipPriceProcessor
 			return t;
 		}
 
-		private void Raise(CusipPriceEventArgs ea) => CusipPriceHandler(this, ea);
+		private void FireEvent(CusipPriceEventArgs ea) => CusipPriceHandler(this, ea);
 	}
 }

@@ -73,7 +73,7 @@ namespace AnagramCppTest
 			string expectedValue1 = "deorsTtW";
 			string expectedValue2 = "deorstTW";
 			auto word = Word(rep, wStr);
-			auto retWordKey = Word::SetWordKey(word);
+			auto retWordKey = Word::GetWordKey(word);
 
 			// Act
 			auto wordKey = word.GetWordKey();

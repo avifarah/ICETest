@@ -46,7 +46,7 @@ namespace AnagramMain
 
 		#region AnagramHelper
 
-		public static string SetWordKey(ref Word word)
+		public static string GetWordKey(ref Word word)
 		{
 			if (word.KeySet) return word.WordKey;
 
@@ -75,8 +75,8 @@ namespace AnagramMain
 			if (word1.WordValue.Length != word2.WordValue.Length) return WordAnagram.NotAnagram;
 			if (word1.WordRepresentation != word2.WordRepresentation) return WordAnagram.NotAnagram;
 
-			if (!word2.KeySet) SetWordKey(ref word2);
-			if (!word1.KeySet) SetWordKey(ref word1);
+			if (!word2.KeySet) GetWordKey(ref word2);
+			if (!word1.KeySet) GetWordKey(ref word1);
 
 			if (string.Compare(word1.WordKey, word2.WordKey, StringComparison.CurrentCultureIgnoreCase) == 0) return WordAnagram.YesAnagram;
 			return WordAnagram.NotAnagram;
